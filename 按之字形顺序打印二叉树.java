@@ -1,10 +1,3 @@
-/*
-ÌâÄ¿ÃèÊö
-ÇëÊµÏÖÒ»¸öº¯Êı°´ÕÕÖ®×ÖĞÎ´òÓ¡¶ş²æÊ÷£¬¼´µÚÒ»ĞĞ°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò´òÓ¡£¬µÚ¶ş²ã°´ÕÕ´ÓÓÒÖÁ×óµÄË³Ğò´òÓ¡£¬µÚÈıĞĞ°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò´òÓ¡£¬ÆäËûĞĞÒÔ´ËÀàÍÆ¡£
-*/
-
-
-
 import java.util.ArrayList;
 
 /*
@@ -20,48 +13,43 @@ public class TreeNode {
 
 }
 */
-
-//ÀûÓÃÕ»µÄÌØĞÔ£¬ÆæÊı²ãÊ±°Ñµ±Ç°²ãµÄÏÂÒ»²ãµÄ½Úµã´Ó×óµ½ÓÒµØ´æÈë£¬µ½ÁËÅ¼Êı²ã¾Í»á´ÓÓÒµ½×óµØÈ¡³ö£»Å¼Êı²ãÍ¬Àí
+/*
+é¢˜ç›®æè¿°
+è¯·å®ç°ä¸€ä¸ªå‡½æ•°æŒ‰ç…§ä¹‹å­—å½¢æ‰“å°äºŒå‰æ ‘ï¼Œå³ç¬¬ä¸€è¡ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåºæ‰“å°ï¼Œ
+ç¬¬äºŒå±‚æŒ‰ç…§ä»å³è‡³å·¦çš„é¡ºåºæ‰“å°ï¼Œç¬¬ä¸‰è¡ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåºæ‰“å°ï¼Œå…¶ä»–è¡Œä»¥æ­¤ç±»æ¨ã€‚
+*/
 import java.util.*;
+
 public class Solution {
+    
+    private Stack<TreeNode> s1 = new Stack(), s2 = new Stack();
+    
+    //åˆ©ç”¨ä¸¤ä¸ªæ ˆæ¥ä¿å­˜å¥‡æ•°å±‚å’Œå¶æ•°å±‚çš„èŠ‚ç‚¹ï¼Œå¥‡æ•°å±‚é¡ºåºæ”¾å…¥ï¼Œå¶æ•°å±‚é€†åºæ”¾å…¥ï¼Œè¿™æ ·ç”±äºæ ˆçš„
+    //åè¿›å…ˆå‡ºç‰¹æ€§ï¼Œå¯ä»¥å®ç°ä¹‹å­—å½¢æ‰“å°
     public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
-        Stack<TreeNode> a = new Stack();    //´æ´¢ÆæÊı²ãµÄ
-        Stack<TreeNode> b = new Stack();    //Å¼Êı²ãµÄ
         ArrayList<ArrayList<Integer>> res = new ArrayList();
-        a.push(pRoot);
+        if( pRoot==null ) return res;
         
-        int depth = 1;
-        while( !a.empty() || !b.empty() ){
-            if( (depth&1)==1 ){
-                //ÆæÊı²ã
+        s1.push(pRoot);
+        while( !s1.empty() || !s2.empty() ){
+            if( !s1.empty() ){
                 ArrayList<Integer> temp = new ArrayList();
-                while( !a.isEmpty() ){
-                    TreeNode x = a.pop();
-                    if( x!=null ){
-                        temp.add(x.val);
-                        b.push(x.left);
-                        b.push(x.right);
-                    }
+                while( !s1.empty() ){
+                    TreeNode node = s1.pop();
+                    temp.add(node.val);
+                    if( node.left!=null ) s2.push(node.left);
+                    if( node.right!=null ) s2.push(node.right);
                 }
-                if( !temp.isEmpty() ){
-                    res.add(temp);
-                    depth++;
-                } 
+                res.add(temp);
             }else{
-                //Å¼Êı²ã
                 ArrayList<Integer> temp = new ArrayList();
-                while( !b.isEmpty() ){
-                    TreeNode x = b.pop();
-                    if( x!=null ){
-                        temp.add(x.val);
-                        a.push(x.right);
-                        a.push(x.left);
-                    }
+                while( !s2.empty() ){
+                    TreeNode node = s2.pop();
+                    temp.add(node.val);
+                    if( node.right!=null ) s1.push(node.right);
+                    if( node.left!=null ) s1.push(node.left);
                 }
-                if( !temp.isEmpty() ){
-                    res.add(temp);
-                    depth++;
-                } 
+                res.add(temp);
             }
         }
         return res;

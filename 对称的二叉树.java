@@ -1,9 +1,4 @@
 /*
-ÌâÄ¿ÃèÊö
-ÇëÊµÏÖÒ»¸öº¯Êı£¬ÓÃÀ´ÅĞ¶ÏÒ»¿Å¶ş²æÊ÷ÊÇ²»ÊÇ¶Ô³ÆµÄ¡£×¢Òâ£¬Èç¹ûÒ»¸ö¶ş²æÊ÷Í¬´Ë¶ş²æÊ÷µÄ¾µÏñÊÇÍ¬ÑùµÄ£¬¶¨ÒåÆäÎª¶Ô³ÆµÄ¡£
-*/
-
-/*
 public class TreeNode {
     int val = 0;
     TreeNode left = null;
@@ -16,17 +11,54 @@ public class TreeNode {
 
 }
 */
+
+/*
+é¢˜ç›®æè¿°
+è¯·å®ç°ä¸€ä¸ªå‡½æ•°ï¼Œç”¨æ¥åˆ¤æ–­ä¸€é¢—äºŒå‰æ ‘æ˜¯ä¸æ˜¯å¯¹ç§°çš„ã€‚æ³¨æ„ï¼Œå¦‚æœä¸€ä¸ªäºŒå‰æ ‘åŒæ­¤äºŒå‰æ ‘çš„é•œåƒæ˜¯åŒæ ·çš„ï¼Œå®šä¹‰å…¶ä¸ºå¯¹ç§°çš„ã€‚
+*/
+import java.util.*;
 public class Solution {
-    boolean isSymmetrical(TreeNode pRoot){
+    
+    //BFSç®—æ³•ï¼Œå°†æ¯ä¸€å±‚çš„èŠ‚ç‚¹æŒ‰å¯¹æ’å…¥åˆ°é˜Ÿåˆ—ä¸­
+    boolean isSymmetrical(TreeNode pRoot)
+    {
         if( pRoot==null ) return true;
-        return compare(pRoot.left, pRoot.right);
+        Queue<TreeNode> q = new LinkedList();
+        q.offer(pRoot.left);
+        q.offer(pRoot.right);
+        while(!q.isEmpty()){
+            TreeNode left = q.poll();
+            TreeNode right = q.poll();
+            if( left==null && right==null ) continue;
+            if( left==null || right==null ) return false;
+            if( left.val != right.val ) return false;
+            q.offer(left.left);
+            q.offer(right.right);
+            q.offer(left.right);
+            q.offer(right.left);
+        }
+        return true;
     }
     
-    boolean compare(TreeNode root1, TreeNode root2){
-        if( root1==null || root2==null ){
-            return root1==root2;
-        }
-        if( root1.val!=root2.val ) return false;
-        return compare(root1.left, root2.right) && compare(root1.right, root2.left);
+    //é€’å½’ç®—æ³•
+    /*
+    boolean isSymmetrical(TreeNode pRoot)
+    {
+        if( pRoot==null ) return true;
+        return fun(pRoot.left, pRoot.right);
     }
+    
+    boolean fun(TreeNode left, TreeNode right){
+        if( left==null && right==null ) return true;
+        else if( left!=null && right!=null ) {
+            if( left.val == right.val ){
+                return fun(left.left, right.right) && fun(left.right, right.left);
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    */
 }
