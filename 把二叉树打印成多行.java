@@ -1,9 +1,3 @@
-/*
-ÌâÄ¿ÃèÊö
-´ÓÉÏµ½ÏÂ°´²ã´òÓ¡¶ş²æÊ÷£¬Í¬Ò»²ã½áµã´Ó×óÖÁÓÒÊä³ö¡£Ã¿Ò»²ãÊä³öÒ»ĞĞ¡£
-*/
-
-import java.util.ArrayList;
 
 /*
 public class TreeNode {
@@ -18,24 +12,34 @@ public class TreeNode {
 
 }
 */
+
+/*
+é¢˜ç›®æè¿°
+ä»ä¸Šåˆ°ä¸‹æŒ‰å±‚æ‰“å°äºŒå‰æ ‘ï¼ŒåŒä¸€å±‚ç»“ç‚¹ä»å·¦è‡³å³è¾“å‡ºã€‚æ¯ä¸€å±‚è¾“å‡ºä¸€è¡Œã€‚
+*/
+
 import java.util.*;
 public class Solution {
+    
+    //ä½¿ç”¨ä¸€ä¸ªé˜Ÿåˆ—æ¥ä¿å­˜æ¯ä¸€å±‚çš„èŠ‚ç‚¹ï¼Œå–å‡ºå’Œå­˜å…¥éƒ½æŒ‰ç…§é¡ºåº
     ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
-        LinkedList<TreeNode> a = new LinkedList();
         ArrayList<ArrayList<Integer>> res = new ArrayList();
         if( pRoot==null ) return res;
-        a.add(pRoot);
+        Queue<TreeNode> temp = new LinkedList();
+        temp.offer(pRoot);
         
-        while( !a.isEmpty() ){
-            int s=0, e=a.size();
-            ArrayList<Integer> temp = new ArrayList();
-            while( s++<e ) {
-                TreeNode x = a.poll();
-                temp.add(x.val);
-                if( x.left!=null ) a.add(x.left);
-                if( x.right!=null ) a.add(x.right);
+        int s, e;
+        while( !temp.isEmpty() ){
+            s = 0;
+            e = temp.size();
+            ArrayList<Integer> list = new ArrayList();
+            for( ; s<e; s++ ){
+                TreeNode node = temp.poll();
+                list.add(node.val);
+                if( node.left!=null ) temp.offer(node.left);
+                if( node.right!=null ) temp.offer(node.right);
             }
-            res.add(temp);
+            res.add(list);
         }
         return res;
     }

@@ -1,31 +1,29 @@
-/*
-ÌâÄ¿ÃèÊö
-ÈçºÎµÃµ½Ò»¸öÊı¾İÁ÷ÖĞµÄÖĞÎ»Êı£¿Èç¹û´ÓÊı¾İÁ÷ÖĞ¶Á³öÆæÊı¸öÊıÖµ£¬ÄÇÃ´ÖĞÎ»Êı¾ÍÊÇËùÓĞÊıÖµÅÅĞòÖ®ºóÎ»ÓÚÖĞ¼äµÄÊıÖµ¡£Èç¹û´ÓÊı¾İÁ÷ÖĞ¶Á³öÅ¼Êı¸öÊıÖµ£¬ÄÇÃ´ÖĞÎ»Êı¾ÍÊÇËùÓĞÊıÖµÅÅĞòÖ®ºóÖĞ¼äÁ½¸öÊıµÄÆ½¾ùÖµ¡£ÎÒÃÇÊ¹ÓÃInsert()·½·¨¶ÁÈ¡Êı¾İÁ÷£¬Ê¹ÓÃGetMedian()·½·¨»ñÈ¡µ±Ç°¶ÁÈ¡Êı¾İµÄÖĞÎ»Êı¡£
-*/
-
 import java.util.*;
+
+/*
+é¢˜ç›®æè¿°
+å¦‚ä½•å¾—åˆ°ä¸€ä¸ªæ•°æ®æµä¸­çš„ä¸­ä½æ•°ï¼Ÿå¦‚æœä»æ•°æ®æµä¸­è¯»å‡ºå¥‡æ•°ä¸ªæ•°å€¼ï¼Œé‚£ä¹ˆä¸­ä½æ•°å°±æ˜¯æ‰€æœ‰æ•°å€¼æ’åºä¹‹åä½äºä¸­é—´çš„æ•°å€¼ã€‚
+å¦‚æœä»æ•°æ®æµä¸­è¯»å‡ºå¶æ•°ä¸ªæ•°å€¼ï¼Œé‚£ä¹ˆä¸­ä½æ•°å°±æ˜¯æ‰€æœ‰æ•°å€¼æ’åºä¹‹åä¸­é—´ä¸¤ä¸ªæ•°çš„å¹³å‡å€¼ã€‚
+æˆ‘ä»¬ä½¿ç”¨Insert()æ–¹æ³•è¯»å–æ•°æ®æµï¼Œä½¿ç”¨GetMedian()æ–¹æ³•è·å–å½“å‰è¯»å–æ•°æ®çš„ä¸­ä½æ•°ã€‚
+*/
 public class Solution {
 
-    LinkedList<Integer> a = new LinkedList();
+    ArrayList<Integer> list = new ArrayList();
+    
     public void Insert(Integer num) {
-        for( int i=0; i<a.size(); ++i ){
-            if( a.get(i)>num ){
-                a.add(i, num);
-                return;
-            }
-        }
-        a.add(num);
+        list.add(num);
+        Collections.sort(list);
     }
 
     public Double GetMedian() {
-        int size = a.size();
+        int size = list.size();
+        double res;
         if( (size&1)==1 ){
-            //ÆæÊı¸ö
-            return Double.parseDouble(String.valueOf(a.get(size / 2)));
+            res = (double) list.get(size/2);
         }else{
-            Double temp = (a.get(size / 2) + a.get(size / 2 - 1))/2.0;
-            return temp;
+            res = (list.get(size>>1) + list.get((size>>1)-1)) / 2.0;
         }
+        return Double.valueOf(res);
     }
 
 
